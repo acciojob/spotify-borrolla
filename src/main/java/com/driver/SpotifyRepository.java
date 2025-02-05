@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class SpotifyRepository {
+
     public HashMap<Artist, List<Album>> artistAlbumMap;
     public HashMap<Album, List<Song>> albumSongMap;
     public HashMap<Playlist, List<Song>> playlistSongMap;
@@ -62,6 +63,15 @@ public class SpotifyRepository {
         return album;
     }
 
+    Artist findArtistByName(String artistName) {
+        for (Artist artist : artists) {
+            if (artist.getName().equalsIgnoreCase(artistName)) {
+                return artist;
+            }
+        }
+        return null;
+    }
+
     public Song createSong(String title, String albumName, int length) throws Exception {
         Album album = findAlbumByName(albumName);
         if (album == null) {
@@ -72,6 +82,15 @@ public class SpotifyRepository {
         albumSongMap.get(album).add(song);
         songLikeMap.put(song, new ArrayList<>());
         return song;
+    }
+
+    Album findAlbumByName(String albumName) {
+        for (Album album : albums) {
+            if (album.getTitle().equalsIgnoreCase(albumName)) {
+                return album;
+            }
+        }
+        return null;
     }
 
     public Playlist createPlaylistOnLength(String mobile, String title, int length) throws Exception {
@@ -115,6 +134,15 @@ public class SpotifyRepository {
         return playlist;
     }
 
+    Song findSongByTitle(String songTitle) {
+        for (Song song : songs) {
+            if (song.getTitle().equalsIgnoreCase(songTitle)) {
+                return song;
+            }
+        }
+        return null;
+    }
+
     public Playlist findPlaylist(String mobile, String playlistTitle) throws Exception {
         User user = findUserByMobile(mobile);
         if (user == null) {
@@ -149,15 +177,6 @@ public class SpotifyRepository {
         return song;
     }
 
-    public Album findAlbumByName(String albumName) {
-        for (Album album : albums) {
-            if (album.getTitle().equals(albumName)) {
-                return album;
-            }
-        }
-        return null;
-    }
-
     public void saveSong(Song song) {
         songs.add(song);
     }
@@ -181,26 +200,8 @@ public class SpotifyRepository {
 
     public Playlist findPlaylistByTitle(String playlistTitle) {
         for (Playlist playlist : playlists) {
-            if (playlist.getTitle().equals(playlistTitle)) {
+            if (playlist.getTitle().equalsIgnoreCase(playlistTitle)) {
                 return playlist;
-            }
-        }
-        return null;
-    }
-
-    Artist findArtistByName(String artistName) {
-        for (Artist artist : artists) {
-            if (artist.getName().equals(artistName)) {
-                return artist;
-            }
-        }
-        return null;
-    }
-
-    Song findSongByTitle(String songTitle) {
-        for (Song song : songs) {
-            if (song.getTitle().equals(songTitle)) {
-                return song;
             }
         }
         return null;
@@ -217,6 +218,19 @@ public class SpotifyRepository {
             }
         }
         return null;
+    }
+
+    public String mostPopularSong() {
+        if (songs.isEmpty()) {
+            return "No songs found";
+        }
+        Song mostPopularSong = songs.get(0);
+        for (Song song : songs) {
+            if (song.getLikes() > mostPopularSong.getLikes()) {
+                mostPopularSong = song;
+            }
+        }
+        return mostPopularSong.getTitle();
     }
 
     public List<User> getSongLikes(Song song) {

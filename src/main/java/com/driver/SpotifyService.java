@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class SpotifyService {
 
+    public void AlbumService(List<Album> albums) {
+    }
+
     private final SpotifyRepository spotifyRepository;
 
     public SpotifyService(SpotifyRepository spotifyRepository) {
