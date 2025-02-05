@@ -20,6 +20,9 @@ public class Album {
 
     }
 
+    public Album(String title, String artistName) {
+    }
+
     public String getTitle() {
         return title;
     }

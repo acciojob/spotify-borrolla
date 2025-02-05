@@ -13,6 +13,9 @@ public class Playlist {
         this.title = title;
     }
 
+    public Playlist(String title, User user) {
+    }
+
     public String getTitle() {
         return title;
     }
@@ -29,5 +32,11 @@ public class Playlist {
     }
 
     public void addListener(User user) {
+    }
+
+    public String getListeners() {
+    }
+
+    public Object getCreator() {
     }
 }

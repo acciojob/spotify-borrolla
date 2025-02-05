@@ -30,4 +30,10 @@ public class Artist {
     public void setLikes(int likes) {
         this.likes = likes;
     }
+
+    public void addLiker(User user) {
+    }
+
+    public int getLikeCount() {
+    }
 }

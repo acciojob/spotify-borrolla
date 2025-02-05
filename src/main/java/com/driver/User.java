@@ -38,5 +38,6 @@ public class User {
     }
 
     public void likeSong(Song song) {
+
     }
 }

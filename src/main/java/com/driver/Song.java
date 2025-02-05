@@ -18,6 +18,9 @@ public class Song {
 
     }
 
+    public Song(String title, String albumName, int length) {
+    }
+
     public String getTitle() {
         return title;
     }
@@ -43,5 +46,21 @@ public class Song {
     }
 
     public Object getArtist() {
+    }
+
+    public String getLikers() {
+    }
+
+    public void addLiker(User user) {
+    }
+
+    public String getArtistName() {
+    }
+
+    public int getLikeCount() {
+    }
+
+    public void add(Song song) {
+
     }
 }
