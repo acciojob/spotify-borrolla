@@ -6,11 +6,10 @@ public class Artist {
     private String name;
     private int likes;
 
-    public Artist(){
-
+    public Artist() {
     }
 
-    public Artist(String name){
+    public Artist(String name) {
         this.name = name;
         this.likes = 0;
     }
@@ -32,8 +31,14 @@ public class Artist {
     }
 
     public void addLiker(User user) {
+        this.likes++;
     }
 
     public int getLikeCount() {
+        return likes;
+    }
+
+    public void addAlbum(Album album) {
+        this.addAlbum(album);
     }
 }

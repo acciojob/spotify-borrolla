@@ -1,19 +1,25 @@
 package com.driver;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Playlist {
     private String title;
+    private User creator;
+    private List<Song> songs = new ArrayList<>();
+    private List<User> listeners = new ArrayList<>();
 
-    public Playlist(){
 
+    public Playlist() {
     }
 
-    public Playlist(String title){
+    public Playlist(String title) {
         this.title = title;
     }
 
     public Playlist(String title, User user) {
+        this.title = title;
+        this.creator = user;
     }
 
     public String getTitle() {
@@ -24,19 +30,23 @@ public class Playlist {
         this.title = title;
     }
 
-
     public void addSong(Song song) {
+        songs.add(song);
     }
 
     public boolean hasListener(User user) {
+        return listeners.contains(user);
     }
 
     public void addListener(User user) {
+        listeners.add(user);
     }
 
-    public String getListeners() {
+    public List<User> getListeners() {
+        return listeners;
     }
 
-    public Object getCreator() {
+    public User getCreator() {
+        return creator;
     }
 }

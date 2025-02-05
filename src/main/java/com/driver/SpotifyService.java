@@ -4,8 +4,6 @@ import java.util.*;
 
 import org.springframework.stereotype.Service;
 
-import static SpotifyService.spotifyRepository;
-
 @Service
 public class SpotifyService {
 
@@ -15,28 +13,30 @@ public class SpotifyService {
         this.spotifyRepository = spotifyRepository;
     }
 
-
-    static SpotifyRepository spotifyRepository = new SpotifyRepository();
-
-    public static User createUser(String name, String mobile){
-           User user = new User(name,mobile);
-           spotifyRepository.saveUser(user);
-           return user;
+    public User createUser(String name, String mobile) {
+        User user = new User(name, mobile);
+        spotifyRepository.saveUser(user);
+        return user;
     }
 
-    public static Artist createArtist(String name) {
-         Artist artist = new Artist(name);
-         spotifyRepository.saveArtist(artist);
-         return artist;
+    public Artist createArtist(String name) {
+        Artist artist = new Artist(name);
+        spotifyRepository.saveArtist(artist);
+        return artist;
     }
 
-    public static Album createAlbum(String title, String artistName) {
-
-        return null;
+    public Album createAlbum(String title, String artistName) {
+        Artist artist = spotifyRepository.findArtistByName(artistName);
+        if (artist == null) {
+            throw new RuntimeException("Artist does not exist");
+        }
+        Album album = new Album(title, artist);
+        spotifyRepository.saveAlbum(album);
+        artist.addAlbum(album);
+        return album;
     }
 
-    public static void createSong(String title, String albumName, int length) {
-
+    public Song createSong(String title, String albumName, int length) throws Exception {
         Album album = spotifyRepository.findAlbumByName(albumName);
         if (album == null) {
             throw new Exception("Album does not exist");
@@ -45,10 +45,9 @@ public class SpotifyService {
         spotifyRepository.saveSong(song);
         album.addSong(song);
         return song;
-
     }
 
-    public static Playlist createPlaylistOnLength(String mobile, String title, int length) throws Exception {
+    public Playlist createPlaylistOnLength(String mobile, String title, int length) throws Exception {
         User user = spotifyRepository.findUserByMobile(mobile);
         if (user == null) {
             throw new Exception("User does not exist");
@@ -62,10 +61,9 @@ public class SpotifyService {
         spotifyRepository.savePlaylist(playlist);
         user.addPlaylist(playlist);
         return playlist;
-
     }
 
-    public static void createPlaylistOnName(String mobile, String title, List<String> songTitles) {
+    public Playlist createPlaylistOnName(String mobile, String title, List<String> songTitles) throws Exception {
         User user = spotifyRepository.findUserByMobile(mobile);
         if (user == null) {
             throw new Exception("User does not exist");
@@ -79,75 +77,66 @@ public class SpotifyService {
         }
         spotifyRepository.savePlaylist(playlist);
         user.addPlaylist(playlist);
-        Object playList;
-        return playList;
-     }
+        return playlist;
     }
 
-    public static void findPlaylist(String mobile, String playlistTitle) {
+    public Playlist findPlaylist(String mobile, String playlistTitle) {
         User user = spotifyRepository.findUserByMobile(mobile);
         if (user == null) {
-            throw new Exception("User does not exist");
+            throw new RuntimeException("User does not exist");
         }
         Playlist playlist = spotifyRepository.findPlaylistByTitle(playlistTitle);
         if (playlist == null) {
-            throw new Exception("Playlist does not exist");
+            throw new RuntimeException("Playlist does not exist");
         }
         if (!playlist.hasListener(user)) {
             playlist.addListener(user);
             user.addPlaylist(playlist);
         }
         return playlist;
-
-
     }
 
-    public static void likeSong(String mobile, String songTitle) {
+    public Song likeSong(String mobile, String songTitle) {
         User user = spotifyRepository.findUserByMobile(mobile);
         if (user == null) {
-            throw new Exception("User does not exist");
+            throw new RuntimeException("User does not exist");
         }
-
-        Song song = SpotifyService.spotifyRepository.findSongByTitle(songTitle);
+        Song song = spotifyRepository.findSongByTitle(songTitle);
         if (song == null) {
-            throw new Exception("Song does not exist");
+            throw new RuntimeException("Song does not exist");
         }
         if (!user.likeSong(song)) {
             user.likeSong(song);
-            song.getArtist().clone();
+            song.getArtist().addLike();
         }
         return song;
-
     }
 
-public String mostPopularArtist() {
-    List<Artist> artists = spotifyRepository.findArtistByName();
-    if (artists.isEmpty()) {
-        return "No artists found";
-    }
-
-    Artist mostPopularArtist = artists.get(0);
-    for (Artist artist : artists) {
-        if (artist.getLikes() > mostPopularArtist.getLikes()) {
-            mostPopularArtist = artist;
+    public String mostPopularArtist() {
+        List<Artist> artists = spotifyRepository.findAllArtists();
+        if (artists.isEmpty()) {
+            return "No artists found";
         }
-    }
-    return mostPopularArtist.getName();
-}
-
-public String mostPopularSong() {
-    List<Song> songs = spotifyRepository.songs;
-    if (songs.isEmpty()) {
-        return "No songs found";
-    }
-
-    Song mostPopularSong = songs.get(0);
-    for (Song song : songs) {
-        if (spotifyRepository.songLikeMap.get(song).size() > spotifyRepository.songLikeMap.get(mostPopularSong).size()) {
-            mostPopularSong = song;
+        Artist mostPopularArtist = artists.get(0);
+        for (Artist artist : artists) {
+            if (artist.getLikes() > mostPopularArtist.getLikes()) {
+                mostPopularArtist = artist;
+            }
         }
+        return mostPopularArtist.getName();
     }
-    return mostPopularSong.getTitle();
-}
 
+    public String mostPopularSong() {
+        List<Song> songs = spotifyRepository.findAllSongs();
+        if (songs.isEmpty()) {
+            return "No songs found";
+        }
+        Song mostPopularSong = songs.get(0);
+        for (Song song : songs) {
+            if (spotifyRepository.getSongLikes(song).size() > spotifyRepository.getSongLikes(mostPopularSong).size()) {
+                mostPopularSong = song;
+            }
+        }
+        return mostPopularSong.getTitle();
+    }
 }
