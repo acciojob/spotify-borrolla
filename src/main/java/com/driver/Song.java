@@ -14,6 +14,10 @@ public class Song {
         this.length = length;
     }
 
+    public Song(String title, Album album, int length) {
+
+    }
+
     public String getTitle() {
         return title;
     }
@@ -36,5 +40,8 @@ public class Song {
 
     public void setLikes(int likes) {
         this.likes = likes;
+    }
+
+    public Object getArtist() {
     }
 }

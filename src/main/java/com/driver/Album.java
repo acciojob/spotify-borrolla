@@ -16,6 +16,10 @@ public class Album {
         this.releaseDate = new Date();
     }
 
+    public Album(String title, Artist artist) {
+
+    }
+
     public String getTitle() {
         return title;
     }
@@ -31,4 +35,9 @@ public class Album {
     public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
     }
+
+    public void addSong(Song song) {
+
+    }
+
 }

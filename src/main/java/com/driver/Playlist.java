@@ -20,4 +20,14 @@ public class Playlist {
     public void setTitle(String title) {
         this.title = title;
     }
+
+
+    public void addSong(Song song) {
+    }
+
+    public boolean hasListener(User user) {
+    }
+
+    public void addListener(User user) {
+    }
 }

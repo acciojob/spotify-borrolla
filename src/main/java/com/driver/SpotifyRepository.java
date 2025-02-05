@@ -1,3 +1,5 @@
+
+
 package com.driver;
 
 import java.util.*;
@@ -37,10 +39,108 @@ public class SpotifyRepository {
         artists = new ArrayList<>();
     }
 
+    public HashMap<Artist, List<Album>> getArtistAlbumMap() {
+        return artistAlbumMap;
+    }
+
+    public void setArtistAlbumMap(HashMap<Artist, List<Album>> artistAlbumMap) {
+        this.artistAlbumMap = artistAlbumMap;
+    }
+
+    public HashMap<Album, List<Song>> getAlbumSongMap() {
+        return albumSongMap;
+    }
+
+    public void setAlbumSongMap(HashMap<Album, List<Song>> albumSongMap) {
+        this.albumSongMap = albumSongMap;
+    }
+
+    public HashMap<Playlist, List<Song>> getPlaylistSongMap() {
+        return playlistSongMap;
+    }
+
+    public void setPlaylistSongMap(HashMap<Playlist, List<Song>> playlistSongMap) {
+        this.playlistSongMap = playlistSongMap;
+    }
+
+    public HashMap<Playlist, List<User>> getPlaylistListenerMap() {
+        return playlistListenerMap;
+    }
+
+    public void setPlaylistListenerMap(HashMap<Playlist, List<User>> playlistListenerMap) {
+        this.playlistListenerMap = playlistListenerMap;
+    }
+
+    public HashMap<User, Playlist> getCreatorPlaylistMap() {
+        return creatorPlaylistMap;
+    }
+
+    public void setCreatorPlaylistMap(HashMap<User, Playlist> creatorPlaylistMap) {
+        this.creatorPlaylistMap = creatorPlaylistMap;
+    }
+
+    public HashMap<User, List<Playlist>> getUserPlaylistMap() {
+        return userPlaylistMap;
+    }
+
+    public void setUserPlaylistMap(HashMap<User, List<Playlist>> userPlaylistMap) {
+        this.userPlaylistMap = userPlaylistMap;
+    }
+
+    public HashMap<Song, List<User>> getSongLikeMap() {
+        return songLikeMap;
+    }
+
+    public void setSongLikeMap(HashMap<Song, List<User>> songLikeMap) {
+        this.songLikeMap = songLikeMap;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
+    public List<Song> getSongs() {
+        return songs;
+    }
+
+    public void setSongs(List<Song> songs) {
+        this.songs = songs;
+    }
+
+    public List<Playlist> getPlaylists() {
+        return playlists;
+    }
+
+    public void setPlaylists(List<Playlist> playlists) {
+        this.playlists = playlists;
+    }
+
+    public List<Album> getAlbums() {
+        return albums;
+    }
+
+    public void setAlbums(List<Album> albums) {
+        this.albums = albums;
+    }
+
+    public List<Artist> getArtists() {
+        return artists;
+    }
+
+    public void setArtists(List<Artist> artists) {
+        this.artists = artists;
+    }
+
     public User createUser(String name, String mobile) {
+
     }
 
     public Artist createArtist(String name) {
+
     }
 
     public Album createAlbum(String title, String artistName) {
@@ -65,9 +165,6 @@ public class SpotifyRepository {
 
     }
 
-    public String mostPopularArtist() {
-    }
 
-    public String mostPopularSong() {
-    }
 }
+

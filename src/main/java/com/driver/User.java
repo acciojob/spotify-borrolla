@@ -6,7 +6,9 @@ public class User {
     private String name;
     private String mobile;
 
-    public User() {}
+    public User() {
+
+    }
 
     public User(String name, String mobile) {
         this.name = name;
@@ -27,5 +29,14 @@ public class User {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public void addPlaylist(Playlist playlist) {
+    }
+
+    public boolean hasLikedSong(Song song) {
+    }
+
+    public void likeSong(Song song) {
     }
 }
