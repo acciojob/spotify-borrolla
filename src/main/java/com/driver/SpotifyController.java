@@ -19,15 +19,16 @@ public class SpotifyController {
     static HashMap<String, Playlist> playlistDB = new HashMap<>();
 
     @PostMapping("/add-user")
-    public ResponseEntity<User> createUser(@RequestParam(name = "name") String name, @RequestParam(name = "mobile") String mobile) {
+    public ResponseEntity<?> createUser(@RequestParam(name = "name") String name, @RequestParam(name = "mobile") String mobile) {
         // Create the user with given name and number
-        if (name == null || name.isEmpty() || mobile == null || mobile.isEmpty()) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        if (name == null || mobile == null) {
+            return new ResponseEntity<>("User not found", HttpStatus.BAD_REQUEST);
         }
         User user = new User(name, mobile);
         userDB.put(mobile, user);
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
+
    //one line added
     @PostMapping("/add-artist")
     public void createArtist(@RequestParam(name = "name") String name) {

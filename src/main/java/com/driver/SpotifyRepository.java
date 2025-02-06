@@ -63,7 +63,7 @@ public class SpotifyRepository {
         return album;
     }
 
-    Artist findArtistByName(String artistName) {
+   public Artist findArtistByName(String artistName) {
         for (Artist artist : artists) {
             if (artist.getName().equalsIgnoreCase(artistName)) {
                 return artist;
@@ -134,7 +134,7 @@ public class SpotifyRepository {
         return playlist;
     }
 
-    Song findSongByTitle(String songTitle) {
+   public Song findSongByTitle(String songTitle) {
         for (Song song : songs) {
             if (song.getTitle().equalsIgnoreCase(songTitle)) {
                 return song;
@@ -220,6 +220,20 @@ public class SpotifyRepository {
         return null;
     }
 
+    public String mostPopularArtist() {
+        // Implementation logic here...
+        if (artists.isEmpty()) {
+            return "No artists found";
+        }
+        Artist mostPopularArtist = artists.get(0);
+        for (Artist artist : artists) {
+            if (artist.getLikes() > mostPopularArtist.getLikes()) {
+                mostPopularArtist = artist;
+            }
+        }
+        return mostPopularArtist.getName();
+    }
+
     public String mostPopularSong() {
         if (songs.isEmpty()) {
             return "No songs found";
@@ -232,6 +246,7 @@ public class SpotifyRepository {
         }
         return mostPopularSong.getTitle();
     }
+
 
     public List<User> getSongLikes(Song song) {
         return songLikeMap.get(song);
