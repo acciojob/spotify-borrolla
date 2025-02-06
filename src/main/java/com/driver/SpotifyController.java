@@ -28,7 +28,7 @@ public class SpotifyController {
         userDB.put(mobile, user);
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
-
+   //one line added
     @PostMapping("/add-artist")
     public void createArtist(@RequestParam(name = "name") String name) {
         // Create the artist with given name
